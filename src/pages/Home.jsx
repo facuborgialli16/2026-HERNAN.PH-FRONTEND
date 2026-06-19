@@ -11,7 +11,7 @@ export const Home = () => {
     useEffect(() => {
         const fetchPublicEvents = async () => {
             try {
-                const response = await apiClient.get('/events');
+                const response = await apiClient.get('/api/events');
                 if (response.data && response.data.ok !== false) {
                     const events = response.data.data.events || [];
                     setPublicEvents(events.filter(e => e.visibility === 'public'));
