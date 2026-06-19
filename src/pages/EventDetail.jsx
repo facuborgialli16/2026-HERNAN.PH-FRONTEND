@@ -32,7 +32,7 @@ export const EventDetail = () => {
 
     const loadData = async () => {
         try {
-            const url = code ? `/events/code/${code}` : `/events/${event_id}`;
+            const url = code ? `/api/events/code/${code}` : `/api/events/${event_id}`;
             const eventRes = await apiClient.get(url);
 
             // Chequear explícitamente si el backend devolvió ok: false
@@ -45,18 +45,18 @@ export const EventDetail = () => {
 
             const actualId = event_id || evt._id;
 
-            const galleriesRes = await apiClient.get(`/events/${actualId}/galleries`);
+            const galleriesRes = await apiClient.get(`/api/events/${actualId}/galleries`);
             if (galleriesRes.data && galleriesRes.data.ok !== false) {
                 setGalleries(galleriesRes.data.data.galleries || []);
             }
 
             if (!isOwner) {
-                const prodRes = await apiClient.get('/products');
+                const prodRes = await apiClient.get('/api/products');
                 if (prodRes.data && prodRes.data.ok !== false) {
                     setProducts(prodRes.data.data.products || []);
                 }
             } else {
-                const ordRes = await apiClient.get(`/orders/event/${actualId}`);
+                const ordRes = await apiClient.get(`/api/orders/event/${actualId}`);
                 if (ordRes.data && ordRes.data.ok !== false) {
                     setOrders(ordRes.data.data.orders || []);
                 }
@@ -76,7 +76,7 @@ export const EventDetail = () => {
     const handleDeleteGallery = async (id) => {
         if (!window.confirm("¿Seguro que deseas eliminar esta galería?")) return;
         try {
-            await apiClient.delete(`/galleries/${id}`);
+            await apiClient.delete(`/api/galleries/${id}`);
             await loadData();
         } catch (err) {
             alert("Error al eliminar la galería");
@@ -87,7 +87,7 @@ export const EventDetail = () => {
         e.preventDefault();
         setIsCreatingGallery(true);
         try {
-            await apiClient.post(`/events/${event._id}/galleries`, newGallery);
+            await apiClient.post(`/api/events/${event._id}/galleries`, newGallery);
             setNewGallery({ name: '', pdfUrl: '' });
             await loadData();
         } catch (err) {
@@ -110,7 +110,7 @@ export const EventDetail = () => {
         if (cart.length === 0) return alert('El carrito está vacío');
         setIsOrdering(true);
         try {
-            await apiClient.post(`/events/${event._id}/orders`, {
+            await apiClient.post(`/api/events/${event._id}/orders`, {
                 clientName,
                 items: cart.map(i => ({
                     photoNumber: i.photoNumber,

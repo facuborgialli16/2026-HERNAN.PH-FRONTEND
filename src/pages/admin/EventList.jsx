@@ -10,7 +10,7 @@ export const EventList = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await apiClient.get('/events');
+                const response = await apiClient.get('/api/events');
                 // El backend devuelve { data: { events } } dentro de response.data
                 setEvents(response.data.data.events || []);
             } catch (err) {
@@ -25,8 +25,8 @@ export const EventList = () => {
     const handleDeleteEvent = async (id) => {
         if (!window.confirm("¿Seguro que deseas eliminar este evento permanentemente?")) return;
         try {
-            await apiClient.delete(`/events/${id}`);
-            const response = await apiClient.get('/events');
+            await apiClient.delete(`/api/events/${id}`);
+            const response = await apiClient.get('/api/events');
             setEvents(response.data.data.events || []);
         } catch (err) {
             alert("Error al eliminar evento");

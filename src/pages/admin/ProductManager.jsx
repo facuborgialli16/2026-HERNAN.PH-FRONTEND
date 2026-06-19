@@ -13,7 +13,7 @@ export const ProductManager = () => {
 
     const loadProducts = async () => {
         try {
-            const res = await apiClient.get('/products');
+            const res = await apiClient.get('/api/products');
             if (res.data && res.data.ok !== false) {
                 setProducts(res.data.data.products || []);
             }
@@ -32,7 +32,7 @@ export const ProductManager = () => {
         e.preventDefault();
         setIsCreating(true);
         try {
-            await apiClient.post('/products', {
+            await apiClient.post('/api/products', {
                 name: newProduct.name,
                 price: Number(newProduct.price)
             });
@@ -48,7 +48,7 @@ export const ProductManager = () => {
     const handleUpdate = async (e, id) => {
         e.preventDefault();
         try {
-            await apiClient.put(`/products/${id}`, {
+            await apiClient.put(`/api/products/${id}`, {
                 name: editingProduct.name,
                 price: Number(editingProduct.price)
             });
@@ -62,7 +62,7 @@ export const ProductManager = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("¿Estás seguro que deseas eliminar este producto? (Se borrará permanentemente)")) return;
         try {
-            await apiClient.delete(`/products/${id}`);
+            await apiClient.delete(`/api/products/${id}`);
             await loadProducts();
         } catch (err) {
             alert("Error al eliminar el producto");

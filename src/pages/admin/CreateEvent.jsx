@@ -18,7 +18,7 @@ export const CreateEvent = () => {
         setIsLoading(true);
         setError(null);
         try {
-            await apiClient.post('/events', formData);
+            await apiClient.post('/api/events', formData);
             navigate('/admin/events');
         } catch (err) {
             setError(err.response?.data?.message || 'Error al crear el evento');

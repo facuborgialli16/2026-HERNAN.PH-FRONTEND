@@ -52,6 +52,7 @@ export const Login = () => {
                         <input
                             type="email"
                             required
+                            autoComplete="email"
                             placeholder="Correo Electrónico"
                             className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-black transition-colors"
                             value={formData.email}
@@ -62,6 +63,7 @@ export const Login = () => {
                         <input
                             type="password"
                             required
+                            autoComplete="current-password"
                             placeholder="Contraseña"
                             className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-black transition-colors"
                             value={formData.password}
